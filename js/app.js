@@ -40,15 +40,23 @@ const numberOfSections = sections.length;
  * @param : Number of Sections.
  */
 const dynamicNavList = function (num) {
+  /**
+   * Looping over the sections Array's to get:
+   * 1- Section Name to be displayed as list textContent.
+   * 2- ID which to be used as href for the list.
+   */
   for (let i = 0; i < num; i++) {
-    let sectionsName = sections[i].getAttribute("data-nav");
-    const sectionsHref = sections[i].getAttribute("id");
+    const sectionsName = sections[i].getAttribute("data-nav");
+    const navHrefAtt = sections[i].getAttribute("id");
 
     const list = document.createElement("li");
-    list.setAttribute("href", "sectionsHref");
-    list.innerText = sectionsName;
-    list.classList.add("menu__link");
+    const link = document.createElement("a");
+    link.setAttribute("href", "#" + navHrefAtt);
+    link.innerText = sectionsName;
+    link.classList.add("menu__link");
+    // list.classList.add("menu__link");
     navBar.append(list);
+    list.append(link);
   }
 };
 

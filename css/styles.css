@@ -74,6 +74,15 @@ section {
 .navbar__menu li {
   display: inline-block;
 }
+@media only screen and (max-width: 31.25em) {
+  /* max width 31.25em = 500px */
+  .navbar__menu ul {
+    text-align: center;
+  }
+  .navbar__menu li {
+    display: block;
+  }
+}
 
 .navbar__menu .menu__link {
   display: block;
