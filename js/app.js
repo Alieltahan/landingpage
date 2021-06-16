@@ -21,59 +21,34 @@
 // Nav Bar Element
 const navBar = document.body.querySelector("#navbar__list");
 
-// Getting the Number of Sections Dynamically as it returns HTML Collection.
-const sections = document.body.getElementsByTagName("section");
-const numberOfSections = sections.length;
+// Getting the Sections Dynamically as it returns NodeList.
+const sections = document.body.querySelectorAll("section");
 
+// Refactoring with Virtual DOM.
+const fragDoc = document.createDocumentFragment();
 /**
  * End Global Variables
  * Start Helper Functions
  *
  */
 
-// TODO: Refactoring with Virtual DOM.
-// Virtual DOM
-// const frag = document.createDocumentFragment();
-
 // @description:  Dynamic Nav List Function based on Number of Sections.
 // @param : Number of Sections.
 
-const dynamicNavList = function (num) {
+const dynamicNavList = function () {
   //  Looping over the sections Array's to get:
   //  1- Section Name to be displayed as list textContent.
   //  2- Adding data-* attribute to be used later for smooth Scrolling.
 
-  for (let i = 0; i < num; i++) {
-    const sectionName = sections[i].getAttribute("data-nav");
-    const sectionId = sections[i].getAttribute("id");
-
+  sections.forEach((section) => {
+    const sectionName = section.getAttribute("data-nav");
+    const sectionId = section.getAttribute("id");
     const list = document.createElement("li");
-    const link = document.createElement("a");
-    link.setAttribute("data-sectionId", "#" + sectionId);
-    link.innerText = sectionName;
-    link.classList.add("menu__link");
-    navBar.append(list);
-    list.append(link);
-
-    // smoothScroll(sectionId);
-  }
+    list.innerHTML = `<a class="menu__link" data-sectionId="#${sectionId}" > ${sectionName} </a>`;
+    fragDoc.append(list);
+  });
+  navBar.append(fragDoc);
 };
-
-// Adding Smooth Scrolling Function based on data-* attribute.
-
-navBar.addEventListener("click", function (e) {
-  const section = document.querySelector(
-    e.target.getAttribute("data-sectionId")
-  );
-  section.scrollIntoView({ behavior: "smooth" });
-});
-
-// const smoothScroll = function (el) {
-//   el.scrollIntoView({ behavior: "smooth" });
-// };
-
-// const section1 = document.querySelector("#section1");
-// section1.scrollIntoView({ behavior: "smooth" });
 
 /**
  * End Helper Functions
@@ -81,12 +56,46 @@ navBar.addEventListener("click", function (e) {
  *
  */
 
-// Build the nav List
-dynamicNavList(numberOfSections);
+// ### Build the nav List
+dynamicNavList();
 
-// Add class 'active' to section when near top of viewport
+// #### Add class 'active' to section when near top of viewport
 
-// Scroll to anchor ID using scrollTO event
+const obsCallBack = function (entries) {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) {
+      entry.target.classList.remove("your-active-class");
+    } else entry.target.classList.add("your-active-class");
+  });
+};
+
+const obsOptions = {
+  root: null,
+  threshold: 0.7,
+};
+
+const sectionsObserver = new IntersectionObserver(obsCallBack, obsOptions);
+
+//adding the API Observer to each Section.
+sections.forEach((section) => {
+  sectionsObserver.observe(section);
+});
+
+// ### Scroll to anchor ID using scrollTO event
+
+// Adding Smooth Scrolling Function based on
+// selecting Sections by data-* attribute Dynamically by a single event for performance "Delegation".
+navBar.addEventListener("click", function (e) {
+  const section = document.querySelector(
+    e.target.getAttribute("data-sectionId")
+  );
+  const sectionCordinates = section.getBoundingClientRect();
+  window.scrollTo({
+    left: sectionCordinates.left + window.pageXOffset,
+    top: sectionCordinates.top + window.pageYOffset,
+    behavior: "smooth",
+  });
+});
 
 /**
  * End Main Functions
