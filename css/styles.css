@@ -252,6 +252,90 @@ section:nth-of-type(3n + 1) .landing__container::after {
   transition: ease 0.5s all;
 }
 
+.arrow-up {
+  display: none;
+  position: fixed;
+  left: 90%;
+  top: 90%;
+  z-index: 10;
+  height: 40px;
+  width: 40px;
+  border: 1.5px solid orangered;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 1.5);
+  overflow: hidden;
+}
+.arrow-up-active {
+  display: block;
+}
+
+.arrow-slide {
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgb(206, 208, 212);
+  position: absolute;
+  display: block;
+  z-index: 0;
+}
+.left-arm {
+  position: absolute;
+  z-index: 1;
+  background-color: transparent;
+  top: 19px;
+  left: 3px;
+  width: 20px;
+  display: block;
+  transform: rotate(-45deg);
+}
+.left-arm:after {
+  content: "";
+  background-color: orangered;
+  width: 20px;
+  height: 1px;
+  display: block;
+  border-radius: 1px;
+  transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 1.5);
+  transform-origin: right center;
+  z-index: -1;
+}
+.right-arm {
+  position: absolute;
+  z-index: 1;
+  background-color: transparent;
+  top: 19px;
+  left: 17px;
+  width: 20px;
+  display: block;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.right-arm:after {
+  content: "";
+  background-color: orangered;
+  width: 20px;
+  height: 1px;
+  display: block;
+  border-radius: 1px;
+  transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 1.5);
+  transform-origin: left center;
+  z-index: -1;
+}
+.arrow-up:hover {
+  transition: all 0.1s;
+}
+.arrow-up:hover .left-arm:after {
+  transform: rotate(-10deg);
+}
+.arrow-up:hover .right-arm:after {
+  transform: rotate(10deg);
+}
+.arrow-up:hover .arrow-slide {
+  transition: all 0.4s ease-in-out;
+  transform: translateY(200%);
+}
+
 /* ---- Theme State Rules ---- */
 /* Section Active Styles */
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */

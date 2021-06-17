@@ -24,6 +24,11 @@ const navBar = document.body.querySelector("#navbar__list");
 // Getting the Sections Dynamically as it returns NodeList.
 const sections = document.body.querySelectorAll("section");
 
+// Scroll Top Arrow
+const scrollTopArrow = document.body.querySelector(".arrow-up");
+// Hero Header
+const heroHeader = document.body.querySelector("#hero");
+
 // Refactoring with Virtual DOM.
 const fragDoc = document.createDocumentFragment();
 /**
@@ -50,9 +55,25 @@ const dynamicNavList = function () {
   navBar.append(fragDoc);
 };
 
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ *
+ */
+
+// ### Build the nav List
+dynamicNavList();
+// Getting the NodeList of NavLists.
+const navLists = document.body.querySelectorAll(".menu__link");
+
+/**
+ * Begining
+ * #### Add class 'active' to section when near top of viewport
+ */
+
 // InterSectionObserver Call Back Function for the Active(Sections - NavList - Section Header)
 // considering the DRY concept & performance - declaring the variable & loops in the begining.
-const obsCallBack = function (entries) {
+const sectionObsCallBack = function (entries) {
   // Looping over the sections
   entries.forEach((entry) => {
     // Active Section's Header
@@ -79,21 +100,8 @@ const obsCallBack = function (entries) {
     });
   });
 };
-/**
- * End Helper Functions
- * Begin Main Functions
- *
- */
-
-// ### Build the nav List
-dynamicNavList();
-// Getting the NodeList of NavLists.
-const navLists = document.body.querySelectorAll(".menu__link");
-
-// #### Add class 'active' to section when near top of viewport
-
 // Observer Options.
-const obsOptions = {
+const sectionObsOptions = {
   root: null,
   threshold: 0.65,
 };
@@ -101,14 +109,25 @@ const obsOptions = {
 // Calling API IntersectionObserver with Params
 // 1- Call Back Func.
 // 2- Options.
-const sectionsObserver = new IntersectionObserver(obsCallBack, obsOptions);
+const sectionsObserver = new IntersectionObserver(
+  sectionObsCallBack,
+  sectionObsOptions
+);
 
 //adding the API Observer to each Section.
 sections.forEach((section) => {
   sectionsObserver.observe(section);
 });
 
-// ### Scroll to anchor ID using scrollTO event
+/**
+ * End
+ * #### Add class 'active' to section when near top of viewport
+ */
+
+/**
+ * Begining
+ * ### Scroll to anchor ID using scrollTO event
+ */
 
 // Adding Smooth Scrolling Function based on
 // selecting Sections by data-* attribute Dynamically by a single event for performance "Delegation".
@@ -122,7 +141,15 @@ navBar.addEventListener("click", function (e) {
     top: sectionCordinates.top + window.pageYOffset,
     behavior: "smooth",
   });
+  // Following function is alternative & modern.
+  //  just align the section vertically in the view port.
+  section.scrollIntoView({ behavior: "smooth", block: "center" });
 });
+
+/**
+ * End
+ * ### Scroll to anchor ID using scrollTO event
+ */
 
 /**
  * End Main Functions
@@ -130,13 +157,53 @@ navBar.addEventListener("click", function (e) {
  *
  */
 
-// Build menu
+// Begining Build menu Collapsible
 const collapsibles = document.querySelectorAll(".collapsible");
 collapsibles.forEach((l) =>
   l.addEventListener("click", function () {
     this.classList.toggle("collapsible--expanded");
   })
 );
-// Scroll to section on link click
+// End Build menu Collapsible
 
-// Set sections as active
+/**
+ *  Begining Scroll to TOP of the Page Arrow.
+ */
+
+// The Call Back function
+const scrollTopCallBack = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) {
+    scrollTopArrow.classList.add("arrow-up-active");
+  } else if (entry.isIntersecting) {
+    scrollTopArrow.classList.remove("arrow-up-active");
+  }
+};
+
+// Observer Options.
+const arrowObserverOptions = {
+  root: null,
+  threshold: 0.65,
+};
+
+// Calling API IntersectionObserver with Params
+// 1- Call Back Func.
+// 2- Options.
+const scrollUpArrowObserver = new IntersectionObserver(
+  scrollTopCallBack,
+  arrowObserverOptions
+);
+
+//adding the API Observer HeroHeader.
+scrollUpArrowObserver.observe(heroHeader);
+
+// Adding Event onClick event for the Arrow btn.
+scrollTopArrow.addEventListener("click", function (e) {
+  // No need to prevent default since I'm not using the att #href.
+  // e.preventDefault();
+  heroHeader.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+/**
+ *  End Scroll to TOP of the Page.
+ */
