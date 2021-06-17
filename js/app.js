@@ -60,20 +60,47 @@ const dynamicNavList = function () {
 dynamicNavList();
 
 // #### Add class 'active' to section when near top of viewport
+// Getting the NodeList of NavLists.
+const navLists = document.body.querySelectorAll(".menu__link");
 
+// observer Call Back Function
 const obsCallBack = function (entries) {
+  // Looping over the sections
   entries.forEach((entry) => {
-    if (!entry.isIntersecting) {
-      entry.target.classList.remove("your-active-class");
-    } else entry.target.classList.add("your-active-class");
+    // Active Section's Header
+    let activeHeader = entry.target.querySelector("h2");
+    // Looping over the NavLists of each section with Matching Strategy
+    navLists.forEach((list) => {
+      if ("#" + entry.target.id === list.getAttribute("data-sectionId")) {
+        if (
+          !entry.isIntersecting &&
+          entry.target.classList.contains("your-active-class")
+        ) {
+          entry.target.classList.remove("your-active-class");
+          list.classList.remove("section-active-class");
+          activeHeader.classList.remove("section-active-class");
+        } else if (entry.isIntersecting) {
+          entry.target.classList.add(
+            "your-active-class",
+            "section-active-class"
+          );
+          list.classList.add("section-active-class");
+          activeHeader.classList.add("section-active-class");
+        }
+      }
+    });
   });
 };
 
+// Observer Options.
 const obsOptions = {
   root: null,
   threshold: 0.7,
 };
 
+// Calling API IntersectionObserver with Params
+// 1- Call Back Func.
+// 2- Options.
 const sectionsObserver = new IntersectionObserver(obsCallBack, obsOptions);
 
 //adding the API Observer to each Section.
