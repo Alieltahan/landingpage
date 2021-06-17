@@ -17,9 +17,12 @@
     <!-- HTML Follows BEM naming conventions 
   IDs are only used for sections to connect menu achors to sections -->
     <header class="page__header">
-      <nav class="navbar__menu">
+      <nav class="navbar__menu collapsible">
+        <svg class="icon icon--primary nav__toggler">
+          <use xlink:href="/css/icons/sprite.svg#menu"></use>
+        </svg>
         <!-- Navigation starts as empty UL that will be populated with JS -->
-        <ul id="navbar__list"></ul>
+        <ul id="navbar__list" class="collapsible__content"></ul>
       </nav>
     </header>
     <main>

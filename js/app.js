@@ -50,20 +50,8 @@ const dynamicNavList = function () {
   navBar.append(fragDoc);
 };
 
-/**
- * End Helper Functions
- * Begin Main Functions
- *
- */
-
-// ### Build the nav List
-dynamicNavList();
-
-// #### Add class 'active' to section when near top of viewport
-// Getting the NodeList of NavLists.
-const navLists = document.body.querySelectorAll(".menu__link");
-
-// observer Call Back Function
+// InterSectionObserver Call Back Function for the Active(Sections - NavList - Section Header)
+// considering the DRY concept & performance - declaring the variable & loops in the begining.
 const obsCallBack = function (entries) {
   // Looping over the sections
   entries.forEach((entry) => {
@@ -91,11 +79,23 @@ const obsCallBack = function (entries) {
     });
   });
 };
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ *
+ */
+
+// ### Build the nav List
+dynamicNavList();
+// Getting the NodeList of NavLists.
+const navLists = document.body.querySelectorAll(".menu__link");
+
+// #### Add class 'active' to section when near top of viewport
 
 // Observer Options.
 const obsOptions = {
   root: null,
-  threshold: 0.7,
+  threshold: 0.65,
 };
 
 // Calling API IntersectionObserver with Params
@@ -131,7 +131,12 @@ navBar.addEventListener("click", function (e) {
  */
 
 // Build menu
-
+const collapsibles = document.querySelectorAll(".collapsible");
+collapsibles.forEach((l) =>
+  l.addEventListener("click", function () {
+    this.classList.toggle("collapsible--expanded");
+  })
+);
 // Scroll to section on link click
 
 // Set sections as active
