@@ -21,6 +21,7 @@ The starter project has some HTML and CSS styling to display a static version of
 ## Instrcutions
 
 Web page link:
+http://landingpage.businessclouder.com/
 
 - Please feel free to explore it.
 
