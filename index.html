@@ -15,7 +15,7 @@
   </head>
   <body>
     <!-- HTML Follows BEM naming conventions 
-  IDs are only used for sections to connect menu achors to sections -->
+      IDs are only used for sections to connect menu achors to sections -->
     <header class="page__header">
       <nav class="navbar__menu collapsible">
         <svg class="icon icon--primary nav__toggler">
@@ -26,7 +26,13 @@
       </nav>
     </header>
     <main>
-      <header class="main__hero">
+      <header id="hero" class="main__hero">
+        <!-- Button Scroll to Top -->
+        <a class="arrow-up">
+          <span class="left-arm"></span>
+          <span class="right-arm"></span>
+          <span class="arrow-slide"></span>
+        </a>
         <h1>Landing Page</h1>
       </header>
       <!-- Each Section has an ID (used for the anchor) and 
