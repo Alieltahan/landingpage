@@ -214,9 +214,9 @@ section:nth-of-type(3n + 1) .landing__container::after {
 /* Section Active Styles */
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 
-section h2.active-class,
-.navbar__menu .menu__link.active-class {
-  color: #cc1;
+section h2.section-active-class,
+.navbar__menu .menu__link.section-active-class {
+  color: rgb(243, 243, 141);
 }
 
 section.your-active-class {
