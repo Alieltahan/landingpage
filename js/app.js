@@ -90,10 +90,7 @@ const sectionObsCallBack = function (entries) {
           list.classList.remove("section-active-class");
           activeHeader.classList.remove("section-active-class");
         } else if (entry.isIntersecting) {
-          entry.target.classList.add(
-            "your-active-class",
-            "section-active-class"
-          );
+          entry.target.classList.add("your-active-class");
           list.classList.add("section-active-class");
           activeHeader.classList.add("section-active-class");
         }
