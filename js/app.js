@@ -31,6 +31,7 @@ const heroHeader = document.body.querySelector("#hero");
 
 // Refactoring with Virtual DOM.
 const fragDoc = document.createDocumentFragment();
+
 /**
  * End Global Variables
  * Start Helper Functions
@@ -63,8 +64,6 @@ const dynamicNavList = function () {
 
 // ### Build the nav List
 dynamicNavList();
-// Getting the NodeList of NavLists.
-const navLists = document.body.querySelectorAll(".menu__link");
 
 /**
  * Begining
@@ -74,6 +73,8 @@ const navLists = document.body.querySelectorAll(".menu__link");
 // InterSectionObserver Call Back Function for the Active(Sections - NavList - Section Header)
 // considering the DRY concept & performance - declaring the variable & loops in the begining.
 const sectionObsCallBack = function (entries) {
+  // Getting the NodeList of NavLists
+  const navLists = document.body.querySelectorAll(".menu__link");
   // Looping over the sections
   entries.forEach((entry) => {
     // Active Section's Header
